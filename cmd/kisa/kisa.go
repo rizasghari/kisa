@@ -2,6 +2,8 @@ package kisa
 
 import (
 	"fmt"
+	"kisa-url-shortner/configs"
+	"kisa-url-shortner/internal/servers"
 	"sync"
 )
 
@@ -21,4 +23,6 @@ func App() *Kisa {
 
 func (k *Kisa) LetsGo() {
 	fmt.Println("App is running")
+	db := servers.GetDB(configs.GetConfig())
+	fmt.Println(db)
 }
