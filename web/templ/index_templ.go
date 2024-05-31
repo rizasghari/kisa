@@ -23,7 +23,7 @@ func Index() templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<!doctype html><html lang=\"en\"><head><meta charset=\"UTF-8\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"><meta http-equiv=\"X-UA-Compatible\" content=\"ie=edge\"><title>My Website</title><link rel=\"stylesheet\" href=\"./style.css\"><link rel=\"icon\" href=\"./favicon.ico\" type=\"image/x-icon\"></head><body><main><h1>Welcome to My Website</h1></main><script src=\"index.js\"></script></body></html>")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<!doctype html><html><head><title>URL Shortener</title><link href=\"https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css\" rel=\"stylesheet\"><script src=\"https://cdnjs.cloudflare.com/ajax/libs/htmx/1.6.1/htmx.min.js\"></script></head><body><div class=\"container mt-5\"><div class=\"card\"><div class=\"card-body\"><h1 class=\"card-title\">URL Shortener</h1><form hx-post=\"/shorten\" hx-swap=\"outerHTML\"><div class=\"form-group\"><input type=\"text\" class=\"form-control\" name=\"url\" placeholder=\"Enter URL here...\" required></div><button type=\"submit\" class=\"btn btn-primary\">Shorten URL</button></form><div class=\"mt-3\" id=\"result\"><!-- Shortened URL will be displayed here --></div></div></div></div></body></html>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
