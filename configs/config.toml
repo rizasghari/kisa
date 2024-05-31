@@ -1,6 +1,7 @@
 [app]
 
 [http]
+port = 8080
 
 [database]
 host = "kisa-db"
