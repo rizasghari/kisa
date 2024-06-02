@@ -3,8 +3,11 @@ package kisa
 import (
 	"fmt"
 	"kisa-url-shortner/configs"
-	"kisa-url-shortner/internal/handlers"
+	"kisa-url-shortner/internal/controllers"
+	"kisa-url-shortner/internal/repositories"
 	"kisa-url-shortner/internal/servers"
+	"kisa-url-shortner/internal/servers/http"
+	"kisa-url-shortner/internal/services"
 	"sync"
 )
 
@@ -24,8 +27,15 @@ func App() *Kisa {
 
 func (k *Kisa) LetsGo() {
 	fmt.Println("App is running")
-	cfg := configs.GetConfig()
-	db := servers.GetDB(cfg)
-	http := servers.NewHttpServer(cfg, db, handlers.NewUserHandler(), handlers.NewHtmlHandler())
-	http.Start()
+
+	config := configs.GetConfig()
+
+	db := servers.GetDB(config)
+
+	userRepository := repositories.NewUserRepository(db)
+
+	userService := services.NewUserService(userRepository)
+
+	httpServer := http.NewHttpServer(config, db, controllers.NewController(userService))
+	httpServer.Start()
 }

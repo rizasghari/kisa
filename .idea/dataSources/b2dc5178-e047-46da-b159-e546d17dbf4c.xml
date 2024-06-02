@@ -3,17 +3,9 @@
   <database-model serializer="dbm" dbms="POSTGRES" family-id="POSTGRES" format-version="4.52">
     <root id="1">
       <DateStyle>mdy</DateStyle>
-      <Grants>1||-9223372036854775808|c|G
-1||10|c|G
-1||10|C|G
-1||10|T|G
-13480||-9223372036854775808|c|G
-13480||10|c|G
-13480||10|C|G
-13480||10|T|G</Grants>
-      <IntrospectionStateNumber>495</IntrospectionStateNumber>
+      <IntrospectionStateNumber>502</IntrospectionStateNumber>
       <ServerVersion>12.19</ServerVersion>
-      <StartupTime>1717185438</StartupTime>
+      <StartupTime>1717317975</StartupTime>
       <TimeZones>true ACDT
 true ACSST
 false ACST
@@ -1408,7 +1400,7 @@ true posixrules
 13181||10|C|G
 13181||-9223372036854775808|U|G
 13181||10|U|G</Grants>
-      <IntrospectionStateNumber>495</IntrospectionStateNumber>
+      <IntrospectionStateNumber>502</IntrospectionStateNumber>
       <ObjectId>16384</ObjectId>
       <OwnerName>postgres</OwnerName>
     </database>
@@ -4675,8 +4667,8 @@ true posixrules
     <schema id="246" parent="2" name="public">
       <Comment>standard public schema</Comment>
       <Current>1</Current>
-      <IntrospectionStateNumber>495</IntrospectionStateNumber>
-      <LastIntrospectionLocalTimestamp>2024-05-31.19:58:30</LastIntrospectionLocalTimestamp>
+      <IntrospectionStateNumber>502</IntrospectionStateNumber>
+      <LastIntrospectionLocalTimestamp>2024-06-02.08:48:16</LastIntrospectionLocalTimestamp>
       <ObjectId>2200</ObjectId>
       <StateNumber>276</StateNumber>
       <OwnerName>postgres</OwnerName>
@@ -5731,34 +5723,27 @@ true posixrules
       <StateNumber>490</StateNumber>
       <TypeId>2950</TypeId>
     </column>
-    <column id="431" parent="285" name="username">
-      <DasType>text|0s</DasType>
-      <NotNull>1</NotNull>
-      <Position>2</Position>
-      <StateNumber>490</StateNumber>
-      <TypeId>25</TypeId>
-    </column>
-    <column id="432" parent="285" name="email">
+    <column id="431" parent="285" name="email">
       <DasType>text|0s</DasType>
       <NotNull>1</NotNull>
       <Position>3</Position>
       <StateNumber>490</StateNumber>
       <TypeId>25</TypeId>
     </column>
-    <column id="433" parent="285" name="password_hash">
+    <column id="432" parent="285" name="password_hash">
       <DasType>text|0s</DasType>
       <NotNull>1</NotNull>
       <Position>4</Position>
       <StateNumber>490</StateNumber>
       <TypeId>25</TypeId>
     </column>
-    <column id="434" parent="285" name="created_at">
+    <column id="433" parent="285" name="created_at">
       <DasType>timestamp with time zone|0s</DasType>
       <Position>5</Position>
       <StateNumber>490</StateNumber>
       <TypeId>1184</TypeId>
     </column>
-    <index id="435" parent="285" name="users_pkey">
+    <index id="434" parent="285" name="users_pkey">
       <ColNames>id</ColNames>
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>24584</ObjectId>
@@ -5767,17 +5752,7 @@ true posixrules
       <Unique>1</Unique>
       <AccessMethodId>403</AccessMethodId>
     </index>
-    <index id="436" parent="285" name="uni_users_username">
-      <ColNames>username</ColNames>
-      <ObjectId>24586</ObjectId>
-      <StateNumber>490</StateNumber>
-      <Unique>1</Unique>
-      <AccessMethodId>403</AccessMethodId>
-      <CollationNames>default</CollationNames>
-      <CollationIds>100</CollationIds>
-      <CollationParentNames>pg_catalog</CollationParentNames>
-    </index>
-    <index id="437" parent="285" name="uni_users_email">
+    <index id="435" parent="285" name="uni_users_email">
       <ColNames>email</ColNames>
       <ObjectId>24588</ObjectId>
       <StateNumber>490</StateNumber>
@@ -5787,19 +5762,14 @@ true posixrules
       <CollationIds>100</CollationIds>
       <CollationParentNames>pg_catalog</CollationParentNames>
     </index>
-    <key id="438" parent="285" name="users_pkey">
+    <key id="436" parent="285" name="users_pkey">
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>24585</ObjectId>
       <Primary>1</Primary>
       <StateNumber>490</StateNumber>
       <UnderlyingIndexId>24584</UnderlyingIndexId>
     </key>
-    <key id="439" parent="285" name="uni_users_username">
-      <ObjectId>24587</ObjectId>
-      <StateNumber>490</StateNumber>
-      <UnderlyingIndexId>24586</UnderlyingIndexId>
-    </key>
-    <key id="440" parent="285" name="uni_users_email">
+    <key id="437" parent="285" name="uni_users_email">
       <ObjectId>24589</ObjectId>
       <StateNumber>490</StateNumber>
       <UnderlyingIndexId>24588</UnderlyingIndexId>

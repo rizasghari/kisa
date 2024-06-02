@@ -3,9 +3,9 @@ package models
 import "time"
 
 type User struct {
-	ID           string    `gorm:"type:uuid;default:gen_random_uuid();primaryKey"`
-	Username     string    `gorm:"unique;not null"`
-	Email        string    `gorm:"unique;not null"`
-	PasswordHash string    `gorm:"not null"`
-	CreatedAt    time.Time `gorm:"autoCreateTime"`
+	ID           string    `json:"id" gorm:"type:uuid;default:gen_random_uuid();primaryKey"`
+	Email        string    `json:"email" gorm:"unique;not null"`
+	PasswordHash string    `json:"-" gorm:"not null"`
+	Password     string    `json:"password" gorm:"-"`
+	CreatedAt    time.Time `json:"-" gorm:"autoCreateTime"`
 }
