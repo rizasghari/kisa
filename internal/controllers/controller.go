@@ -14,12 +14,14 @@ import (
 var jwtKey = []byte("eycEW3OKV+axBFZQL4cpbAVRFMhSEc+xRrcHXxhTM8U=")
 
 type Controller struct {
-	userService *services.UserService
+	authenticationService *services.AuthenticationService
+	shortenerService      *services.ShortenerService
 }
 
-func NewController(userService *services.UserService) *Controller {
+func NewController(authenticationService *services.AuthenticationService, shortenerService *services.ShortenerService) *Controller {
 	return &Controller{
-		userService: userService,
+		authenticationService: authenticationService,
+		shortenerService:      shortenerService,
 	}
 }
 
@@ -55,7 +57,7 @@ func (c *Controller) Login(ctx *gin.Context) {
 	email := ctx.PostForm("email")
 	password := ctx.PostForm("password")
 
-	user, err := c.userService.Login(email, password)
+	user, err := c.authenticationService.Login(email, password)
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
@@ -77,9 +79,31 @@ func (c *Controller) Signup(ctx *gin.Context) {
 	var user models.User
 	user.Email = ctx.PostForm("email")
 	user.PasswordHash = ctx.PostForm("password")
-	err := c.userService.CreateUser(&user)
+	err := c.authenticationService.CreateUser(&user)
 	if err != nil {
 		ctx.AbortWithStatusJSON(http.StatusInternalServerError, err)
 	}
 	ctx.Redirect(http.StatusFound, "/")
+}
+
+func (c *Controller) Shorten(ctx *gin.Context) {
+	var url models.URL
+	url.OriginalURL = ctx.PostForm("url")
+	url.UserID = ctx.GetString("user_id")
+	short, err := c.shortenerService.Shorten(&url)
+	if err != nil {
+		ctx.AbortWithStatusJSON(http.StatusInternalServerError, err)
+		return
+	}
+	ctx.HTML(http.StatusOK, "", web.Result(utils.GetFullShortURL(short)))
+}
+
+func (c *Controller) RedirectToOriginalURL(ctx *gin.Context) {
+	shortURL := ctx.Param("short")
+	originalURL, err := c.shortenerService.GetOriginalURL(shortURL)
+	if err != nil {
+		ctx.AbortWithStatusJSON(http.StatusInternalServerError, err)
+		return
+	}
+	ctx.Redirect(http.StatusFound, originalURL)
 }

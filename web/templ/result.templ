@@ -1,0 +1,5 @@
+package web
+
+templ Result(short string) {
+    <a href={templ.SafeURL(short)} target="_blank">{short}</a>
+}

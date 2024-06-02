@@ -19,12 +19,12 @@ type Server struct {
 func NewHttpServer(
 	config *configs.Config,
 	dbHandler *gorm.DB,
-	httpHandler *controllers.Controller,
+	controller *controllers.Controller,
 ) *Server {
 	return &Server{
 		Config:     config,
 		db:         dbHandler,
-		controller: httpHandler,
+		controller: controller,
 	}
 }
 
@@ -58,6 +58,8 @@ func (hs *Server) setRoutes() {
 	hs.Router.POST("/signup", hs.controller.Signup)
 	hs.Router.POST("/login", hs.controller.Login)
 
+	hs.Router.GET("/:short", hs.controller.RedirectToOriginalURL)
+
 	alreadyAuthenticated := hs.Router.Group("/")
 	alreadyAuthenticated.Use(hs.controller.AlreadyAuthenticated())
 	{
@@ -70,6 +72,7 @@ func (hs *Server) setRoutes() {
 	{
 		authorized.GET("/", hs.controller.GetIndexPage)
 		authorized.POST("/logout", hs.controller.Logout)
+		authorized.POST("/shorten", hs.controller.Shorten)
 	}
 }
 

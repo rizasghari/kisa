@@ -5,7 +5,7 @@ templ Form() {
         <div class="card">
             <div class="card-body">
                 <h1 class="card-title">URL Shortener</h1>
-                <form hx-post="/shorten" hx-swap="outerHTML">
+                <form hx-post="/shorten" hx-swap="innerHTML" hx-target="#result">
                     <div class="form-group">
                         <input type="text" class="form-control" name="url" placeholder="Enter URL here..." required>
                     </div>

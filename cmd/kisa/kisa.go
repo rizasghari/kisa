@@ -33,9 +33,11 @@ func (k *Kisa) LetsGo() {
 	db := servers.GetDB(config)
 
 	userRepository := repositories.NewUserRepository(db)
+	urlRepository := repositories.NewUrlRepository(db)
 
-	userService := services.NewUserService(userRepository)
+	authenticationService := services.NewAuthenticationService(userRepository)
+	shortenerService := services.NewShortenerService(urlRepository)
 
-	httpServer := http.NewHttpServer(config, db, controllers.NewController(userService))
+	httpServer := http.NewHttpServer(config, db, controllers.NewController(authenticationService, shortenerService))
 	httpServer.Start()
 }

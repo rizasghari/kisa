@@ -37,29 +37,22 @@ func (c *Controller) AuthMiddleware() gin.HandlerFunc {
 		} else {
 			jwtTokenFromCookie, err := ctx.Cookie("jwt_token")
 			if err != nil {
-				log.Println("JWT token not provided")
 				ctx.Redirect(http.StatusFound, "/login")
 				return
 			}
 			jwtToken = jwtTokenFromCookie
 		}
 
-		log.Println("token: ", jwtToken)
-
 		if jwtToken == "" {
-			log.Println("token not found")
 			ctx.Redirect(http.StatusFound, "/login")
 			return
 		}
 
 		claims, err := utils.VerifyToken(jwtToken, jwtKey)
 		if err != nil {
-			log.Println("invalid token")
 			ctx.Redirect(http.StatusFound, "/login")
 			return
 		}
-
-		log.Println("valid token")
 
 		ctx.Set("user_id", claims.ID)
 		ctx.Set("user_email", claims.Email)

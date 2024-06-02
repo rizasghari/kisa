@@ -23,7 +23,7 @@ func Form() templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div class=\"container mt-5\"><div class=\"card\"><div class=\"card-body\"><h1 class=\"card-title\">URL Shortener</h1><form hx-post=\"/shorten\" hx-swap=\"outerHTML\"><div class=\"form-group\"><input type=\"text\" class=\"form-control\" name=\"url\" placeholder=\"Enter URL here...\" required></div><button type=\"submit\" class=\"btn btn-primary\">Shorten URL</button></form><div class=\"mt-3\" id=\"result\"><!-- Shortened URL will be displayed here --></div></div></div></div>")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div class=\"container mt-5\"><div class=\"card\"><div class=\"card-body\"><h1 class=\"card-title\">URL Shortener</h1><form hx-post=\"/shorten\" hx-swap=\"innerHTML\" hx-target=\"#result\"><div class=\"form-group\"><input type=\"text\" class=\"form-control\" name=\"url\" placeholder=\"Enter URL here...\" required></div><button type=\"submit\" class=\"btn btn-primary\">Shorten URL</button></form><div class=\"mt-3\" id=\"result\"><!-- Shortened URL will be displayed here --></div></div></div></div>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
