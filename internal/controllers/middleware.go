@@ -1,15 +1,18 @@
 package controllers
 
 import (
-	"github.com/dgrijalva/jwt-go"
 	"github.com/gin-gonic/gin"
+	"kisa-url-shortner/internal/utils"
 	"log"
 	"net/http"
+	"strings"
 )
 
 func (c *Controller) AuthMiddleware() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		tokenString := ctx.GetHeader("Authorization")
+
+		log.Println("token: ", tokenString)
 
 		if tokenString == "" {
 			log.Println("token not found")
@@ -17,13 +20,12 @@ func (c *Controller) AuthMiddleware() gin.HandlerFunc {
 			return
 		}
 
-		claims := &Claims{}
-		token, err := jwt.ParseWithClaims(tokenString, claims,
-			func(token *jwt.Token) (interface{}, error) {
-				return jwtKey, nil
-			})
+		if strings.Contains(tokenString, "Bearer") {
+			tokenString = strings.Replace(tokenString, "Bearer ", "", 1)
+		}
 
-		if err != nil || !token.Valid {
+		claims, err := utils.VerifyToken(tokenString, jwtKey)
+		if err != nil {
 			log.Println("invalid token")
 			ctx.Redirect(http.StatusFound, "/login")
 			return
@@ -31,7 +33,8 @@ func (c *Controller) AuthMiddleware() gin.HandlerFunc {
 
 		log.Println("valid token")
 
-		ctx.Set("email", claims.Email)
+		ctx.Set("user_id", claims.ID)
+		ctx.Set("user_email", claims.Email)
 		ctx.Next()
 	}
 }

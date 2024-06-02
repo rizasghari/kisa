@@ -3,7 +3,11 @@ package utils
 import (
 	"crypto/rand"
 	"encoding/base64"
+	"fmt"
+	"github.com/golang-jwt/jwt/v5"
 	"golang.org/x/crypto/bcrypt"
+	"kisa-url-shortner/internal/models"
+	"time"
 )
 
 func HashPassword(password string) (string, error) {
@@ -25,4 +29,39 @@ func GenerateSecretKey() string {
 		panic(err)
 	}
 	return base64.StdEncoding.EncodeToString(key)
+}
+
+func CreateJwtToken(id, email string, secretKey []byte, expiration time.Time) (string, error) {
+	token := jwt.NewWithClaims(jwt.SigningMethodHS256,
+		models.Claims{
+			ID:    id,
+			Email: email,
+			RegisteredClaims: jwt.RegisteredClaims{
+				ExpiresAt: jwt.NewNumericDate(expiration),
+			},
+		})
+
+	tokenString, err := token.SignedString(secretKey)
+	if err != nil {
+		return "", err
+	}
+
+	return tokenString, nil
+}
+
+func VerifyToken(tokenString string, secretKey []byte) (*models.Claims, error) {
+	claims := &models.Claims{}
+	token, err := jwt.ParseWithClaims(tokenString, claims, func(token *jwt.Token) (interface{}, error) {
+		return secretKey, nil
+	})
+
+	if err != nil {
+		return nil, fmt.Errorf("error parsing token: %w", err)
+	}
+
+	if !token.Valid {
+		return nil, fmt.Errorf("invalid token")
+	}
+
+	return claims, nil
 }

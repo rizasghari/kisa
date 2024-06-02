@@ -1,10 +1,10 @@
 package controllers
 
 import (
-	"github.com/dgrijalva/jwt-go"
 	"github.com/gin-gonic/gin"
 	"kisa-url-shortner/internal/models"
 	"kisa-url-shortner/internal/services"
+	"kisa-url-shortner/internal/utils"
 	web "kisa-url-shortner/web/templ"
 	"net/http"
 	"time"
@@ -12,10 +12,6 @@ import (
 
 var jwtKey = []byte("eycEW3OKV+axBFZQL4cpbAVRFMhSEc+xRrcHXxhTM8U=")
 
-type Claims struct {
-	Email string `json:"email"`
-	jwt.StandardClaims
-}
 type Controller struct {
 	userService *services.UserService
 }
@@ -48,24 +44,11 @@ func (c *Controller) Login(ctx *gin.Context) {
 		return
 	}
 
-	expirationTime := time.Now().Add(30 * time.Minute)
-	claims := &Claims{
-		Email: user.Email,
-		StandardClaims: jwt.StandardClaims{
-			ExpiresAt: expirationTime.Unix(),
-		},
-	}
+	expiration := time.Now().Add(time.Hour * 24).Unix()
+	token, err := utils.CreateJwtToken(user.ID, user.Email, jwtKey, time.Unix(expiration, 0))
 
-	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
-	tokenString, err := token.SignedString(jwtKey)
-	if err != nil {
-		ctx.JSON(http.StatusInternalServerError, gin.H{"error": "Could not create token"})
-		return
-	}
-
-	ctx.SetCookie("jwt_token", tokenString, int(expirationTime.Sub(time.Now()).Seconds()), "/", "",
-		false, true)
-	ctx.JSON(http.StatusOK, gin.H{"token": tokenString})
+	ctx.SetCookie("jwt_token", token, int(expiration), "/", "", false, true)
+	ctx.JSON(http.StatusOK, gin.H{"token": token})
 }
 
 func (c *Controller) Signup(ctx *gin.Context) {
