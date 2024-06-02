@@ -10,7 +10,7 @@ import "context"
 import "io"
 import "bytes"
 
-func SignIn() templ.Component {
+func NotFound() templ.Component {
 	return templ.ComponentFunc(func(ctx context.Context, templ_7745c5c3_W io.Writer) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_Buffer, templ_7745c5c3_IsBuffer := templ_7745c5c3_W.(*bytes.Buffer)
 		if !templ_7745c5c3_IsBuffer {
@@ -23,7 +23,7 @@ func SignIn() templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div class=\"container mt-5\"><h2>Login</h2><form method=\"POST\" action=\"/login\" hx-post=\"/login\" hx-target=\"#page\" hx-swap=\"innerHTML\"><div class=\"form-group\"><label for=\"email\">Email Address</label> <input type=\"email\" class=\"form-control\" id=\"email\" name=\"email\" placeholder=\"Enter email address\" required></div><div class=\"form-group\"><label for=\"password\">Password</label> <input type=\"password\" class=\"form-control\" id=\"password\" name=\"password\" placeholder=\"Enter password\" required></div><button type=\"submit\" class=\"btn btn-primary\">Login</button></form><p>Don't have an account? <a href=\"/signup\">Sign up</a></p></div>")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<p>Error 404 - Not found</p>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

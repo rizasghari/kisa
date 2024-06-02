@@ -32,6 +32,10 @@ func (c *Controller) GetIndexPage(ctx *gin.Context) {
 	}
 }
 
+func (c *Controller) NotFound(ctx *gin.Context) {
+	ctx.HTML(http.StatusNotFound, "", web.Index(false, "404", nil))
+}
+
 func (c *Controller) LoginPage(ctx *gin.Context) {
 	ctx.HTML(http.StatusOK, "", web.Index(false, "login", nil))
 }
@@ -54,7 +58,12 @@ func (c *Controller) Login(ctx *gin.Context) {
 	token, err := utils.CreateJwtToken(user.ID, user.Email, jwtKey, time.Unix(expiration, 0))
 
 	ctx.SetCookie("jwt_token", token, int(expiration), "/", "", true, true)
-	ctx.HTML(http.StatusOK, "", web.Form())
+	ctx.HTML(http.StatusOK, "", web.Index(true, "home", &email))
+}
+
+func (c *Controller) Logout(ctx *gin.Context) {
+	ctx.SetCookie("jwt_token", "", -1, "/", "", true, true)
+	ctx.HTML(http.StatusOK, "", web.Index(false, "login", nil))
 }
 
 func (c *Controller) Signup(ctx *gin.Context) {

@@ -3,7 +3,7 @@ package web
 templ SignIn() {
 <div class="container mt-5">
     <h2>Login</h2>
-    <form method="POST" action="/login" hx-post="/login" hx-target="#content" hx-swap="innerHTML" hx-replace-url="/">
+    <form method="POST" action="/login" hx-post="/login" hx-target="#page" hx-swap="innerHTML">
         <div class="form-group">
             <label for="email">Email Address</label>
             <input type="email" class="form-control" id="email" name="email" placeholder="Enter email address" required>

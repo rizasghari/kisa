@@ -10,19 +10,23 @@ templ Index(isAuthorized bool, route string, email *string) {
             <script src="https://cdnjs.cloudflare.com/ajax/libs/htmx/1.6.1/htmx.min.js"></script>
         </head>
         <body>
-            @Header(email)
-            <div id="content">
-                if isAuthorized {
-                    @Form()
-                } else {
-                    if route == "login" {
-                        @SignIn()
-                    } else if route == "signup" {
-                        @Signup()
+            <div id="page">
+                 @Header(email)
+                 <div id="content">
+                    if isAuthorized {
+                        @Form()
+                    } else {
+                        if route == "login" {
+                            @SignIn()
+                        } else if route == "signup" {
+                            @Signup()
+                        } else if route == "404" {
+                            @NotFound()
+                        }
                     }
-                }
+                </div>
+                @Footer()
             </div>
-            @Footer()
         </body>
     </html>
 }

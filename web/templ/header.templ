@@ -7,7 +7,7 @@ templ Header(email *string) {
         <ul class="navbar-nav ml-auto">
             if email != nil {
                 <li class="nav-item">
-                    <a class="nav-link" href="/" hx-post="/logout" hx-boost="true">Logout</a>
+                    <a class="nav-link" href="/logout" hx-post="/logout" hx-target="#page" hx-swap="innerHTML">Logout</a>
                 </li>
             } else {
                 <li class="nav-item">

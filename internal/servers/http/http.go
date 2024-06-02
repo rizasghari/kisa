@@ -54,6 +54,8 @@ func (hs *Server) configureTempl() {
 
 func (hs *Server) setRoutes() {
 
+	hs.Router.NoRoute(hs.controller.NotFound)
+
 	hs.Router.POST("/signup", hs.controller.Signup)
 	hs.Router.POST("/login", hs.controller.Login)
 
@@ -68,6 +70,7 @@ func (hs *Server) setRoutes() {
 	authorized.Use(hs.controller.AuthMiddleware())
 	{
 		authorized.GET("/", hs.controller.GetIndexPage)
+		authorized.POST("/logout", hs.controller.Logout)
 	}
 }
 

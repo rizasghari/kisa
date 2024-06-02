@@ -28,7 +28,7 @@ func Header(email *string) templ.Component {
 			return templ_7745c5c3_Err
 		}
 		if email != nil {
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<li class=\"nav-item\"><a class=\"nav-link\" href=\"/\" hx-post=\"/logout\" hx-boost=\"true\">Logout</a></li>")
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<li class=\"nav-item\"><a class=\"nav-link\" href=\"/logout\" hx-post=\"/logout\" hx-target=\"#page\" hx-swap=\"innerHTML\">Logout</a></li>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
