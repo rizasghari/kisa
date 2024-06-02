@@ -3,6 +3,7 @@ package kisa
 import (
 	"fmt"
 	"kisa/configs"
+	"kisa/internal/cli"
 	"kisa/internal/controllers"
 	"kisa/internal/repositories"
 	"kisa/internal/servers"
@@ -38,6 +39,16 @@ func (k *Kisa) LetsGo() {
 	authenticationService := services.NewAuthenticationService(userRepository)
 	shortenerService := services.NewShortenerService(urlRepository)
 
-	httpServer := http.NewHttpServer(config, db, controllers.NewController(authenticationService, shortenerService))
-	httpServer.Start()
+	cliChan := make(chan bool)
+	_cli := cli.NewCli(shortenerService)
+	go _cli.Run(cliChan)
+
+	startHTTPServer := <-cliChan
+
+	if startHTTPServer {
+		httpServer := http.NewHttpServer(config, db, controllers.NewController(authenticationService, shortenerService))
+		httpServer.Start()
+	} else {
+		fmt.Println("Kisa lost it's way!")
+	}
 }
