@@ -6,6 +6,7 @@ import (
 	"kisa-url-shortner/internal/services"
 	"kisa-url-shortner/internal/utils"
 	web "kisa-url-shortner/web/templ"
+	"log"
 	"net/http"
 	"time"
 )
@@ -25,23 +26,29 @@ func NewController(userService *services.UserService) *Controller {
 func (c *Controller) GetIndexPage(ctx *gin.Context) {
 	email := ctx.GetString("user_email")
 	if email != "" {
-		ctx.HTML(http.StatusOK, "", web.Index(true, "home", &email))
+		ctx.HTML(http.StatusOK, "", web.Index(true, "home"))
 
 	} else {
-		ctx.HTML(http.StatusOK, "", web.Index(false, "home", nil))
+		ctx.HTML(http.StatusOK, "", web.Index(false, "home"))
 	}
 }
 
 func (c *Controller) NotFound(ctx *gin.Context) {
-	ctx.HTML(http.StatusNotFound, "", web.Index(false, "404", nil))
+	if utils.IsAuthenticated(ctx, jwtKey) {
+		log.Println("NotFound - user already authenticated")
+		ctx.HTML(http.StatusNotFound, "", web.Index(true, "404"))
+	} else {
+		log.Println("NotFound - user not authenticated")
+		ctx.HTML(http.StatusNotFound, "", web.Index(false, "404"))
+	}
 }
 
 func (c *Controller) LoginPage(ctx *gin.Context) {
-	ctx.HTML(http.StatusOK, "", web.Index(false, "login", nil))
+	ctx.HTML(http.StatusOK, "", web.Index(false, "login"))
 }
 
 func (c *Controller) SignupPage(ctx *gin.Context) {
-	ctx.HTML(http.StatusOK, "", web.Index(false, "signup", nil))
+	ctx.HTML(http.StatusOK, "", web.Index(false, "signup"))
 }
 
 func (c *Controller) Login(ctx *gin.Context) {
@@ -58,12 +65,12 @@ func (c *Controller) Login(ctx *gin.Context) {
 	token, err := utils.CreateJwtToken(user.ID, user.Email, jwtKey, time.Unix(expiration, 0))
 
 	ctx.SetCookie("jwt_token", token, int(expiration), "/", "", true, true)
-	ctx.HTML(http.StatusOK, "", web.Index(true, "home", &email))
+	ctx.HTML(http.StatusOK, "", web.Index(true, "home"))
 }
 
 func (c *Controller) Logout(ctx *gin.Context) {
 	ctx.SetCookie("jwt_token", "", -1, "/", "", true, true)
-	ctx.HTML(http.StatusOK, "", web.Index(false, "login", nil))
+	ctx.HTML(http.StatusOK, "", web.Index(false, "login"))
 }
 
 func (c *Controller) Signup(ctx *gin.Context) {

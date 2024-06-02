@@ -63,6 +63,7 @@ func (c *Controller) AuthMiddleware() gin.HandlerFunc {
 
 		ctx.Set("user_id", claims.ID)
 		ctx.Set("user_email", claims.Email)
+		ctx.Set("authenticated", true)
 		ctx.Next()
 	}
 }

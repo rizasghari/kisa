@@ -10,7 +10,7 @@ import "context"
 import "io"
 import "bytes"
 
-func Header(email *string) templ.Component {
+func Header(isAuthenticated bool) templ.Component {
 	return templ.ComponentFunc(func(ctx context.Context, templ_7745c5c3_W io.Writer) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_Buffer, templ_7745c5c3_IsBuffer := templ_7745c5c3_W.(*bytes.Buffer)
 		if !templ_7745c5c3_IsBuffer {
@@ -27,13 +27,13 @@ func Header(email *string) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		if email != nil {
+		if isAuthenticated {
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<li class=\"nav-item\"><a class=\"nav-link\" href=\"/logout\" hx-post=\"/logout\" hx-target=\"#page\" hx-swap=\"innerHTML\">Logout</a></li>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 		} else {
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<li class=\"nav-item\"><a class=\"nav-link\" href=\"/login\" hx-get=\"/login\" hx-boost=\"true\">Login</a></li><li class=\"nav-item\"><a class=\"nav-link\" href=\"/signup\" hx-get=\"/signup\" hx-boost=\"true\">Signup</a></li>")
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<li class=\"nav-item\"><a class=\"nav-link\" href=\"/login\" hx-get=\"/login\" hx-target=\"#page\" hx-swap=\"innerHTML\">Login</a></li><li class=\"nav-item\"><a class=\"nav-link\" href=\"/signup\" hx-get=\"/signup\" hx-target=\"#page\" hx-swap=\"innerHTML\">Signup</a></li>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}

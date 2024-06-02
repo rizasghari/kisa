@@ -4,9 +4,11 @@ import (
 	"crypto/rand"
 	"encoding/base64"
 	"fmt"
+	"github.com/gin-gonic/gin"
 	"github.com/golang-jwt/jwt/v5"
 	"golang.org/x/crypto/bcrypt"
 	"kisa-url-shortner/internal/models"
+	"log"
 	"time"
 )
 
@@ -64,4 +66,18 @@ func VerifyToken(tokenString string, secretKey []byte) (*models.Claims, error) {
 	}
 
 	return claims, nil
+}
+
+func IsAuthenticated(ctx *gin.Context, jwtKey []byte) bool {
+	jwtToken, err := ctx.Cookie("jwt_token")
+	if err != nil {
+		log.Println("IsAuthenticated - JWT token not provided")
+		return false
+	}
+	if _, err = VerifyToken(jwtToken, jwtKey); err != nil {
+		log.Println("IsAuthenticated - user already authenticated")
+		return false
+	}
+
+	return true
 }

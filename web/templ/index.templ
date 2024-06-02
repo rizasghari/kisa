@@ -1,6 +1,6 @@
 package web
 
-templ Index(isAuthorized bool, route string, email *string) {
+templ Index(isAuthenticated bool, route string) {
     <!DOCTYPE html>
     <html>
         <head>
@@ -11,17 +11,23 @@ templ Index(isAuthorized bool, route string, email *string) {
         </head>
         <body>
             <div id="page">
-                 @Header(email)
+                 @Header(isAuthenticated)
                  <div id="content">
-                    if isAuthorized {
-                        @Form()
+                    if isAuthenticated {
+                        switch route {
+                            case "home":
+                                @Form()
+                            case "404":
+                                @NotFound()
+                        }
                     } else {
-                        if route == "login" {
-                            @SignIn()
-                        } else if route == "signup" {
-                            @Signup()
-                        } else if route == "404" {
-                            @NotFound()
+                        switch route {
+                            case "login":
+                                @SignIn()
+                            case "signup":
+                                @Signup()
+                            case "404":
+                                @NotFound()
                         }
                     }
                 </div>

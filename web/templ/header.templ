@@ -1,20 +1,20 @@
 package web
 
-templ Header(email *string) {
+templ Header(isAuthenticated bool) {
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <a class="navbar-brand" href="#">URL Shortener</a>
     <div class="collapse navbar-collapse">
         <ul class="navbar-nav ml-auto">
-            if email != nil {
+            if isAuthenticated {
                 <li class="nav-item">
                     <a class="nav-link" href="/logout" hx-post="/logout" hx-target="#page" hx-swap="innerHTML">Logout</a>
                 </li>
             } else {
                 <li class="nav-item">
-                    <a class="nav-link" href="/login" hx-get="/login" hx-boost="true">Login</a>
+                    <a class="nav-link" href="/login" hx-get="/login" hx-target="#page" hx-swap="innerHTML">Login</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/signup" hx-get="/signup" hx-boost="true">Signup</a>
+                    <a class="nav-link" href="/signup" hx-get="/signup" hx-target="#page" hx-swap="innerHTML">Signup</a>
                 </li>
             }
         </ul>

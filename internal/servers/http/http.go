@@ -6,7 +6,6 @@ import (
 	"gorm.io/gorm"
 	"kisa-url-shortner/configs"
 	"kisa-url-shortner/internal/controllers"
-	"kisa-url-shortner/web/templ"
 	"log"
 )
 
@@ -43,7 +42,7 @@ func (hs *Server) configureStatics() {
 
 func (hs *Server) configureTempl() {
 	ginHtmlRenderer := hs.Router.HTMLRender
-	hs.Router.HTMLRender = &web.HTMLTemplRenderer{FallbackHtmlRenderer: ginHtmlRenderer}
+	hs.Router.HTMLRender = &controllers.HTMLTemplRenderer{FallbackHtmlRenderer: ginHtmlRenderer}
 
 	// Disable trusted proxy warning.
 	err := hs.Router.SetTrustedProxies(nil)
