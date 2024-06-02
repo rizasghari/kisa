@@ -1,4 +1,4 @@
-module kisa-url-shortner
+module kisa
 
 go 1.22
 

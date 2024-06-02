@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"gorm.io/gorm"
-	"kisa-url-shortner/configs"
-	"kisa-url-shortner/internal/controllers"
+	"kisa/configs"
+	"kisa/internal/controllers"
 	"log"
 )
 

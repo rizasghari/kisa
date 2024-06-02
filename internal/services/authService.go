@@ -1,9 +1,9 @@
 package services
 
 import (
-	"kisa-url-shortner/internal/models"
-	"kisa-url-shortner/internal/repositories"
-	"kisa-url-shortner/internal/utils"
+	"kisa/internal/models"
+	"kisa/internal/repositories"
+	"kisa/internal/utils"
 )
 
 type AuthenticationService struct {

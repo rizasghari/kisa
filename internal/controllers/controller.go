@@ -2,10 +2,10 @@ package controllers
 
 import (
 	"github.com/gin-gonic/gin"
-	"kisa-url-shortner/internal/models"
-	"kisa-url-shortner/internal/services"
-	"kisa-url-shortner/internal/utils"
-	web "kisa-url-shortner/web/templ"
+	"kisa/internal/models"
+	"kisa/internal/services"
+	"kisa/internal/utils"
+	web "kisa/web/templ"
 	"log"
 	"net/http"
 	"time"

@@ -2,8 +2,8 @@ package repositories
 
 import (
 	"gorm.io/gorm"
-	"kisa-url-shortner/internal/models"
-	"kisa-url-shortner/internal/utils"
+	"kisa/internal/models"
+	"kisa/internal/utils"
 )
 
 type UserRepository struct {

@@ -2,7 +2,7 @@ package repositories
 
 import (
 	"gorm.io/gorm"
-	"kisa-url-shortner/internal/models"
+	"kisa/internal/models"
 )
 
 type UrlRepository struct {

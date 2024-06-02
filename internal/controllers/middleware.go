@@ -2,7 +2,7 @@ package controllers
 
 import (
 	"github.com/gin-gonic/gin"
-	"kisa-url-shortner/internal/utils"
+	"kisa/internal/utils"
 	"log"
 	"net/http"
 	"strings"

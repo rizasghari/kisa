@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
-	"kisa-url-shortner/configs"
-	"kisa-url-shortner/internal/models"
+	"kisa/configs"
+	"kisa/internal/models"
 	"log"
 	"sync"
 )

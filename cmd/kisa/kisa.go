@@ -2,12 +2,12 @@ package kisa
 
 import (
 	"fmt"
-	"kisa-url-shortner/configs"
-	"kisa-url-shortner/internal/controllers"
-	"kisa-url-shortner/internal/repositories"
-	"kisa-url-shortner/internal/servers"
-	"kisa-url-shortner/internal/servers/http"
-	"kisa-url-shortner/internal/services"
+	"kisa/configs"
+	"kisa/internal/controllers"
+	"kisa/internal/repositories"
+	"kisa/internal/servers"
+	"kisa/internal/servers/http"
+	"kisa/internal/services"
 	"sync"
 )
 

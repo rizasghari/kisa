@@ -1,7 +1,7 @@
 package main
 
 import (
-	"kisa-url-shortner/cmd/kisa"
+	"kisa/cmd/kisa"
 )
 
 func main() {
