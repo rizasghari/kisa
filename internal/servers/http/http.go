@@ -57,8 +57,12 @@ func (hs *Server) setRoutes() {
 	hs.Router.POST("/signup", hs.controller.Signup)
 	hs.Router.POST("/login", hs.controller.Login)
 
-	hs.Router.GET("/login", hs.controller.LoginPage)
-	hs.Router.GET("/signup", hs.controller.SignupPage)
+	alreadyAuthenticated := hs.Router.Group("/")
+	alreadyAuthenticated.Use(hs.controller.AlreadyAuthenticated())
+	{
+		alreadyAuthenticated.GET("/login", hs.controller.LoginPage)
+		alreadyAuthenticated.GET("/signup", hs.controller.SignupPage)
+	}
 
 	authorized := hs.Router.Group("/")
 	authorized.Use(hs.controller.AuthMiddleware())

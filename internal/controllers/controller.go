@@ -23,15 +23,21 @@ func NewController(userService *services.UserService) *Controller {
 }
 
 func (c *Controller) GetIndexPage(ctx *gin.Context) {
-	ctx.HTML(http.StatusOK, "", web.Index(true, "home"))
+	email := ctx.GetString("user_email")
+	if email != "" {
+		ctx.HTML(http.StatusOK, "", web.Index(true, "home", &email))
+
+	} else {
+		ctx.HTML(http.StatusOK, "", web.Index(false, "home", nil))
+	}
 }
 
 func (c *Controller) LoginPage(ctx *gin.Context) {
-	ctx.HTML(http.StatusOK, "", web.Index(false, "login"))
+	ctx.HTML(http.StatusOK, "", web.Index(false, "login", nil))
 }
 
 func (c *Controller) SignupPage(ctx *gin.Context) {
-	ctx.HTML(http.StatusOK, "", web.Index(false, "signup"))
+	ctx.HTML(http.StatusOK, "", web.Index(false, "signup", nil))
 }
 
 func (c *Controller) Login(ctx *gin.Context) {
@@ -47,8 +53,8 @@ func (c *Controller) Login(ctx *gin.Context) {
 	expiration := time.Now().Add(time.Hour * 24).Unix()
 	token, err := utils.CreateJwtToken(user.ID, user.Email, jwtKey, time.Unix(expiration, 0))
 
-	ctx.SetCookie("jwt_token", token, int(expiration), "/", "", false, true)
-	ctx.JSON(http.StatusOK, gin.H{"token": token})
+	ctx.SetCookie("jwt_token", token, int(expiration), "/", "", true, true)
+	ctx.HTML(http.StatusOK, "", web.Form())
 }
 
 func (c *Controller) Signup(ctx *gin.Context) {

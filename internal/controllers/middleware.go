@@ -8,23 +8,51 @@ import (
 	"strings"
 )
 
+func (c *Controller) AlreadyAuthenticated() gin.HandlerFunc {
+	return func(ctx *gin.Context) {
+		jwtToken, err := ctx.Cookie("jwt_token")
+		if err != nil {
+			log.Println("JWT token not provided")
+			ctx.Next()
+		}
+		if _, err = utils.VerifyToken(jwtToken, jwtKey); err == nil {
+			log.Println("user already authenticated")
+			ctx.Redirect(http.StatusFound, "/")
+			return
+		}
+		ctx.Next()
+	}
+}
+
 func (c *Controller) AuthMiddleware() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
-		tokenString := ctx.GetHeader("Authorization")
+		var jwtToken string
+		jwtTokenFromHeader := ctx.GetHeader("Authorization")
+		if jwtTokenFromHeader != "" {
+			if strings.Contains(jwtTokenFromHeader, "Bearer") {
+				jwtToken = strings.Replace(jwtTokenFromHeader, "Bearer ", "", 1)
+			} else {
+				jwtToken = jwtTokenFromHeader
+			}
+		} else {
+			jwtTokenFromCookie, err := ctx.Cookie("jwt_token")
+			if err != nil {
+				log.Println("JWT token not provided")
+				ctx.Redirect(http.StatusFound, "/login")
+				return
+			}
+			jwtToken = jwtTokenFromCookie
+		}
 
-		log.Println("token: ", tokenString)
+		log.Println("token: ", jwtToken)
 
-		if tokenString == "" {
+		if jwtToken == "" {
 			log.Println("token not found")
 			ctx.Redirect(http.StatusFound, "/login")
 			return
 		}
 
-		if strings.Contains(tokenString, "Bearer") {
-			tokenString = strings.Replace(tokenString, "Bearer ", "", 1)
-		}
-
-		claims, err := utils.VerifyToken(tokenString, jwtKey)
+		claims, err := utils.VerifyToken(jwtToken, jwtKey)
 		if err != nil {
 			log.Println("invalid token")
 			ctx.Redirect(http.StatusFound, "/login")
