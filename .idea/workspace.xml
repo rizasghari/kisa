@@ -5,18 +5,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ff4e8153-591e-4108-91cf-e6711ffe6a31" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/internal/repositories/logRepo.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/internal/services/logService.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/b2dc5178-e047-46da-b159-e546d17dbf4c.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/b2dc5178-e047-46da-b159-e546d17dbf4c.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/internal/interfaces/cacher.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/internal/services/redisService.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmd/kisa/kisa.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/kisa/kisa.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/compose.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/compose.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/cli/cli.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/cli/cli.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/configs/config.toml" beforeDir="false" afterPath="$PROJECT_DIR$/configs/config.toml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/go.sum" beforeDir="false" afterPath="$PROJECT_DIR$/go.sum" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/internal/controllers/controller.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/controllers/controller.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/models/log.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/models/log.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/repositories/urlRepo.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/repositories/urlRepo.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/servers/http/httpServer.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/servers/http/httpServer.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/services/shortenerService.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/services/shortenerService.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/utils/urlUtils.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/utils/urlUtils.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/models/url.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/models/url.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -45,28 +43,28 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
-    &quot;DefaultGoTemplateProperty&quot;: &quot;Go File&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.go.formatter.settings.were.checked&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.go.migrated.go.modules.settings&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.go.modules.go.list.on.any.changes.was.set&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;go.import.settings.migrated&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/rizaasghari&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;com.codeium.AppSettingsConfigurable&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
+    "DefaultGoTemplateProperty": "Go File",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.go.formatter.settings.were.checked": "true",
+    "RunOnceActivity.go.migrated.go.modules.settings": "true",
+    "RunOnceActivity.go.modules.go.list.on.any.changes.was.set": "true",
+    "git-widget-placeholder": "redis",
+    "go.import.settings.migrated": "true",
+    "last_opened_file_path": "/Users/rizaasghari",
+    "node.js.detected.package.eslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "com.codeium.AppSettingsConfigurable"
   },
-  &quot;keyToStringList&quot;: {
-    &quot;DatabaseDriversLRU&quot;: [
-      &quot;postgresql&quot;
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "postgresql"
     ]
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/internal/controllers" />

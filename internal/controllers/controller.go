@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"github.com/gin-gonic/gin"
+	"kisa/internal/interfaces"
 	"kisa/internal/models"
 	"kisa/internal/services"
 	"kisa/internal/utils"
@@ -14,20 +15,23 @@ import (
 var jwtKey = []byte("eycEW3OKV+axBFZQL4cpbAVRFMhSEc+xRrcHXxhTM8U=")
 
 type Controller struct {
-	authenticationService *services.AuthenticationService
-	shortenerService      *services.ShortenerService
-	logService            *services.LogService
+	authService      *services.AuthenticationService
+	shortenerService *services.ShortenerService
+	logService       *services.LogService
+	cacheService     interfaces.Cacher
 }
 
 func NewController(
-	authenticationService *services.AuthenticationService,
+	authService *services.AuthenticationService,
 	shortenerService *services.ShortenerService,
 	logService *services.LogService,
+	redisService interfaces.Cacher,
 ) *Controller {
 	return &Controller{
-		authenticationService: authenticationService,
-		shortenerService:      shortenerService,
-		logService:            logService,
+		authService:      authService,
+		shortenerService: shortenerService,
+		logService:       logService,
+		cacheService:     redisService,
 	}
 }
 
@@ -63,7 +67,7 @@ func (c *Controller) Login(ctx *gin.Context) {
 	email := ctx.PostForm("email")
 	password := ctx.PostForm("password")
 
-	user, err := c.authenticationService.Login(email, password)
+	user, err := c.authService.Login(email, password)
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
@@ -85,7 +89,7 @@ func (c *Controller) Signup(ctx *gin.Context) {
 	var user models.User
 	user.Email = ctx.PostForm("email")
 	user.PasswordHash = ctx.PostForm("password")
-	err := c.authenticationService.CreateUser(&user)
+	err := c.authService.CreateUser(&user)
 	if err != nil {
 		ctx.AbortWithStatusJSON(http.StatusInternalServerError, err)
 	}
@@ -101,16 +105,36 @@ func (c *Controller) Shorten(ctx *gin.Context) {
 		ctx.AbortWithStatusJSON(http.StatusInternalServerError, err)
 		return
 	}
+
+	// Save to cache
+	err = c.cacheService.Set(short, &url)
+	if err != nil {
+		log.Println("Redis error: ", err)
+	}
+
 	ctx.HTML(http.StatusOK, "", web.Result(utils.GetFullShortURL(short)))
 }
 
 func (c *Controller) RedirectToOriginalURL(ctx *gin.Context) {
 	shortURL := ctx.Param("short")
-	URL, err := c.shortenerService.GetOriginalURL(shortURL)
 
-	if err != nil {
-		ctx.AbortWithStatusJSON(http.StatusInternalServerError, err)
-		return
+	var URL *models.URL
+
+	// First, check if the url exists in cache
+	if c.cacheService.Check(shortURL) {
+		UrlFromCache, err := c.cacheService.Get(shortURL)
+		if err != nil {
+			ctx.AbortWithStatusJSON(http.StatusInternalServerError, err)
+			return
+		}
+		URL = UrlFromCache.(*models.URL)
+	} else {
+		UrlFromDB, err := c.shortenerService.GetOriginalURL(shortURL)
+		if err != nil {
+			ctx.AbortWithStatusJSON(http.StatusInternalServerError, err)
+			return
+		}
+		URL = UrlFromDB
 	}
 
 	urlLog := models.Log{
@@ -119,7 +143,7 @@ func (c *Controller) RedirectToOriginalURL(ctx *gin.Context) {
 		UserAgent: ctx.Request.UserAgent(),
 		IP:        utils.GetClientIpAddr(ctx.Request),
 	}
-	err = c.logService.CreateLog(&urlLog)
+	err := c.logService.CreateLog(&urlLog)
 	if err != nil {
 		ctx.AbortWithStatusJSON(http.StatusInternalServerError, err)
 		return

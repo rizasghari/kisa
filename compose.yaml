@@ -4,12 +4,18 @@ services:
     build: .
     ports:
       - 8080:8080
+    environment:
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
     entrypoint: ./kisa --http-mode
     depends_on:
       kisa-db:
         condition: service_healthy
+      kisa-redis:
+        condition: service_healthy
     links:
       - kisa-db
+      - kisa-redis
 
   kisa-db:
     container_name: kisa-db
@@ -28,5 +34,18 @@ services:
       timeout: 5s
       retries: 5
 
+  kisa-redis:
+    image: redis:latest
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis-data:/data
+    healthcheck:
+      test: [ "CMD", "redis-cli", "ping" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
 volumes:
-  db-data: {}
+  db-data: { }
+  redis-data: { }
