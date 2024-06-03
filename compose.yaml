@@ -36,6 +36,7 @@ services:
 
   kisa-redis:
     image: redis:latest
+    container_name: kisa-redis
     ports:
       - "6379:6379"
     volumes:
@@ -45,6 +46,14 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+
+  kisa-redis-insight:
+    image: redis/redisinsight:latest
+    container_name: kisa-redis-insight
+    ports:
+      - "8001:8001"
+    depends_on:
+      - kisa-redis
 
 volumes:
   db-data: { }

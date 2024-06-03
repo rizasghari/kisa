@@ -64,12 +64,14 @@ func (rs *RedisService) Set(key string, url *models.URL) error {
 func (rs *RedisService) Get(key string) (*models.URL, error) {
 	result, err := rs.client.Get(ctx, key).Result()
 	if err != nil {
+		log.Println("Redis Get error: ", err)
 		return nil, err
 	}
 
 	var url *models.URL
 	err = json.Unmarshal([]byte(result), &url)
 	if err != nil {
+		log.Println("Redis Get json unmarshal error: ", err)
 		return nil, err
 	}
 	return url, err
@@ -78,9 +80,10 @@ func (rs *RedisService) Get(key string) (*models.URL, error) {
 func (rs *RedisService) Check(key string) bool {
 	result, err := rs.client.Exists(ctx, key).Result()
 	if err != nil {
+		log.Println("Redis Check error: ", err)
 		return false
 	}
-	return result == 1
+	return result > 0
 }
 
 func (rs *RedisService) Delete(key string) error {

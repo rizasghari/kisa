@@ -35,6 +35,9 @@ func (ss *ShortenerService) GenerateShortURL(originalURL string) string {
 }
 
 func (ss *ShortenerService) GetOriginalURL(shortURL string) (*models.URL, error) {
-
 	return ss.urlRepository.GetOriginalURL(shortURL)
+}
+
+func (ss *ShortenerService) UpdateAccessCount(shortURL string) error {
+	return ss.urlRepository.UpdateAccessCount(shortURL)
 }

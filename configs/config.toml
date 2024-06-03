@@ -17,4 +17,4 @@ host = "kisa-redis"
 port = 6379
 password = "redis_password"
 # Cache duration in seconds
-cache = 10
+cache = 60

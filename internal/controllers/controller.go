@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"kisa/internal/interfaces"
 	"kisa/internal/models"
@@ -106,10 +107,14 @@ func (c *Controller) Shorten(ctx *gin.Context) {
 		return
 	}
 
-	// Save to cache
-	err = c.cacheService.Set(short, &url)
-	if err != nil {
-		log.Println("Redis error: ", err)
+	// Save to cache if not exists
+	if !c.cacheService.Check(short) {
+		err = c.cacheService.Set(short, &url)
+		if err != nil {
+			log.Println("Redis error: ", err)
+		} else {
+			log.Println("Saved to cache: ", short)
+		}
 	}
 
 	ctx.HTML(http.StatusOK, "", web.Result(utils.GetFullShortURL(short)))
@@ -127,7 +132,8 @@ func (c *Controller) RedirectToOriginalURL(ctx *gin.Context) {
 			ctx.AbortWithStatusJSON(http.StatusInternalServerError, err)
 			return
 		}
-		URL = UrlFromCache.(*models.URL)
+		URL = UrlFromCache
+		log.Println("Found in cache: ", shortURL)
 	} else {
 		UrlFromDB, err := c.shortenerService.GetOriginalURL(shortURL)
 		if err != nil {
@@ -135,8 +141,10 @@ func (c *Controller) RedirectToOriginalURL(ctx *gin.Context) {
 			return
 		}
 		URL = UrlFromDB
+		log.Println("Found in DB: ", shortURL)
 	}
 
+	// Save log
 	urlLog := models.Log{
 		UrlID:     URL.ID,
 		Referrer:  ctx.Request.Referer(),
@@ -145,8 +153,13 @@ func (c *Controller) RedirectToOriginalURL(ctx *gin.Context) {
 	}
 	err := c.logService.CreateLog(&urlLog)
 	if err != nil {
-		ctx.AbortWithStatusJSON(http.StatusInternalServerError, err)
-		return
+		fmt.Println(err)
+	}
+
+	// Update access count
+	err = c.shortenerService.UpdateAccessCount(shortURL)
+	if err != nil {
+		fmt.Println(err)
 	}
 
 	ctx.Redirect(http.StatusFound, URL.OriginalURL)
