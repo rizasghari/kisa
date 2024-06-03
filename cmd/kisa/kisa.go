@@ -40,6 +40,7 @@ func (k *Kisa) LetsGo() {
 	authenticationService := services.NewAuthenticationService(userRepository)
 	shortenerService := services.NewShortenerService(urlRepository)
 	logService := services.NewLogService(logRepository)
+	redisService := services.InitializeRedisClient(config)
 
 	cliChan := make(chan bool)
 	_cli := cli.NewCli(shortenerService)
@@ -52,6 +53,7 @@ func (k *Kisa) LetsGo() {
 			authenticationService,
 			shortenerService,
 			logService,
+			redisService,
 		)
 		httpServer := http.NewHttpServer(
 			config,

@@ -31,3 +31,12 @@ func (ur *UrlRepository) GetOriginalURL(shortURL string) (*models.URL, error) {
 	}
 	return &url, nil
 }
+
+func (ur *UrlRepository) UpdateAccessCount(shortURL string) error {
+	err := ur.db.Model(&models.URL{}).Where("short_url = ?",
+		shortURL).Update("access_count", gorm.Expr("access_count + 1")).Error
+	if err != nil {
+		return err
+	}
+	return nil
+}
