@@ -4,7 +4,7 @@ services:
     build: .
     ports:
       - 8080:8080
-    entrypoint: ./kisa --shorten
+    entrypoint: ./kisa --http-mode
     depends_on:
       kisa-db:
         condition: service_healthy

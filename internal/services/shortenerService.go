@@ -34,6 +34,7 @@ func (ss *ShortenerService) GenerateShortURL(originalURL string) string {
 	return hash[:6]
 }
 
-func (ss *ShortenerService) GetOriginalURL(shortURL string) (string, error) {
+func (ss *ShortenerService) GetOriginalURL(shortURL string) (*models.URL, error) {
+
 	return ss.urlRepository.GetOriginalURL(shortURL)
 }

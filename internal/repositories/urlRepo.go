@@ -23,11 +23,11 @@ func (ur *UrlRepository) AddNew(url *models.URL) (string, error) {
 	return url.ShortURL, nil
 }
 
-func (ur *UrlRepository) GetOriginalURL(shortURL string) (string, error) {
+func (ur *UrlRepository) GetOriginalURL(shortURL string) (*models.URL, error) {
 	var url models.URL
 	err := ur.db.Where("short_url = ?", shortURL).First(&url).Error
 	if err != nil {
-		return "", err
+		return nil, err
 	}
-	return url.OriginalURL, nil
+	return &url, nil
 }

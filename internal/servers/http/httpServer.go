@@ -58,7 +58,7 @@ func (hs *Server) setRoutes() {
 	hs.Router.POST("/signup", hs.controller.Signup)
 	hs.Router.POST("/login", hs.controller.Login)
 
-	hs.Router.GET("/:short", hs.controller.RedirectToOriginalURL)
+	hs.Router.GET("/k/:short", hs.controller.RedirectToOriginalURL)
 
 	alreadyAuthenticated := hs.Router.Group("/")
 	alreadyAuthenticated.Use(hs.controller.AlreadyAuthenticated())

@@ -1,6 +1,8 @@
 package models
 
-import "time"
+import (
+	"time"
+)
 
 type Log struct {
 	ID         string    `gorm:"type:uuid;default:gen_random_uuid();primaryKey"`
@@ -9,4 +11,5 @@ type Log struct {
 	AccessedAt time.Time `gorm:"autoCreateTime"`
 	Referrer   string
 	UserAgent  string
+	IP         string
 }

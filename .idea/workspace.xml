@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="ALL" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="ff4e8153-591e-4108-91cf-e6711ffe6a31" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/internal/repositories/logRepo.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/internal/services/logService.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/b2dc5178-e047-46da-b159-e546d17dbf4c.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/b2dc5178-e047-46da-b159-e546d17dbf4c.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/kisa/kisa.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/kisa/kisa.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/compose.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/compose.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/cli/cli.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/cli/cli.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/controllers/controller.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/controllers/controller.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/models/log.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/models/log.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/repositories/urlRepo.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/repositories/urlRepo.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/servers/http/httpServer.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/servers/http/httpServer.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/services/shortenerService.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/services/shortenerService.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/utils/urlUtils.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/utils/urlUtils.go" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Go File" />
+      </list>
+    </option>
+  </component>
+  <component name="GOROOT" url="file:///usr/local/go" />
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 5
+}</component>
+  <component name="ProjectId" id="2hF7pxrU3YK1Zo79ozx8dZenHOI" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
+    &quot;DefaultGoTemplateProperty&quot;: &quot;Go File&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.go.formatter.settings.were.checked&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.go.migrated.go.modules.settings&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.go.modules.go.list.on.any.changes.was.set&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;go.import.settings.migrated&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/rizaasghari&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;com.codeium.AppSettingsConfigurable&quot;
+  },
+  &quot;keyToStringList&quot;: {
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;postgresql&quot;
+    ]
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/internal/controllers" />
+      <recent name="$PROJECT_DIR$" />
+      <recent name="$PROJECT_DIR$/internal/servers/http" />
+      <recent name="$PROJECT_DIR$/web/templ" />
+    </key>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-gosdk-33c477a475b1-e0158606a674-org.jetbrains.plugins.go.sharedIndexes.bundled-GO-241.15989.157" />
+        <option value="bundled-js-predefined-1d06a55b98c1-91d5c284f522-JavaScript-GO-241.15989.157" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+  </component>
+  <component name="VgoProject">
+    <settings-migrated>true</settings-migrated>
+  </component>
+</project>

@@ -16,12 +16,18 @@ var jwtKey = []byte("eycEW3OKV+axBFZQL4cpbAVRFMhSEc+xRrcHXxhTM8U=")
 type Controller struct {
 	authenticationService *services.AuthenticationService
 	shortenerService      *services.ShortenerService
+	logService            *services.LogService
 }
 
-func NewController(authenticationService *services.AuthenticationService, shortenerService *services.ShortenerService) *Controller {
+func NewController(
+	authenticationService *services.AuthenticationService,
+	shortenerService *services.ShortenerService,
+	logService *services.LogService,
+) *Controller {
 	return &Controller{
 		authenticationService: authenticationService,
 		shortenerService:      shortenerService,
+		logService:            logService,
 	}
 }
 
@@ -100,10 +106,24 @@ func (c *Controller) Shorten(ctx *gin.Context) {
 
 func (c *Controller) RedirectToOriginalURL(ctx *gin.Context) {
 	shortURL := ctx.Param("short")
-	originalURL, err := c.shortenerService.GetOriginalURL(shortURL)
+	URL, err := c.shortenerService.GetOriginalURL(shortURL)
+
 	if err != nil {
 		ctx.AbortWithStatusJSON(http.StatusInternalServerError, err)
 		return
 	}
-	ctx.Redirect(http.StatusFound, originalURL)
+
+	urlLog := models.Log{
+		UrlID:     URL.ID,
+		Referrer:  ctx.Request.Referer(),
+		UserAgent: ctx.Request.UserAgent(),
+		IP:        utils.GetClientIpAddr(ctx.Request),
+	}
+	err = c.logService.CreateLog(&urlLog)
+	if err != nil {
+		ctx.AbortWithStatusJSON(http.StatusInternalServerError, err)
+		return
+	}
+
+	ctx.Redirect(http.StatusFound, URL.OriginalURL)
 }

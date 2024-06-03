@@ -35,9 +35,11 @@ func (k *Kisa) LetsGo() {
 
 	userRepository := repositories.NewUserRepository(db)
 	urlRepository := repositories.NewUrlRepository(db)
+	logRepository := repositories.NewLogRepository(db)
 
 	authenticationService := services.NewAuthenticationService(userRepository)
 	shortenerService := services.NewShortenerService(urlRepository)
+	logService := services.NewLogService(logRepository)
 
 	cliChan := make(chan bool)
 	_cli := cli.NewCli(shortenerService)
@@ -46,7 +48,16 @@ func (k *Kisa) LetsGo() {
 	startHTTPServer := <-cliChan
 
 	if startHTTPServer {
-		httpServer := http.NewHttpServer(config, db, controllers.NewController(authenticationService, shortenerService))
+		controller := controllers.NewController(
+			authenticationService,
+			shortenerService,
+			logService,
+		)
+		httpServer := http.NewHttpServer(
+			config,
+			db,
+			controller,
+		)
 		httpServer.Start()
 	} else {
 		fmt.Println("Kisa lost it's way!")

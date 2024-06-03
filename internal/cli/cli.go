@@ -22,8 +22,8 @@ func (c *Cli) Run(startHTTPServerCh chan bool) {
 	var shorten bool
 	var starHttpServer bool
 
-	flag.BoolVar(&shorten, "shorten", false, "Shorten url")
-	flag.BoolVar(&starHttpServer, "http", false, "Also start http server")
+	flag.BoolVar(&shorten, "cli-mode", false, "Shorten url")
+	flag.BoolVar(&starHttpServer, "http-mode", false, "Also start http server")
 
 	flag.Parse()
 
